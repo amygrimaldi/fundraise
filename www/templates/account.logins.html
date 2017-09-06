@@ -1,0 +1,25 @@
+<ion-view view-title="Log into account" class="logincss">
+    <ion-content>
+        <div class="loginform">
+            <form ng-submit="log_in(username, password)">
+                <div class="item">
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <input type="text" placeholder="Username" ng-model="username">
+                        </label>
+                        <label class="item item-input item-floating-label">
+                            <input type="password" placeholder="Password" ng-model="password">
+                        </label>
+                        <div class="col text-right">
+                            <button ion-button class="button button-balanced button-block">Login</button>
+                        </div>
+                        <p class="text-center">Forgot your password?</p>
+                        <div class="col text-center">
+                            <button ion-button class="button button-assertive button-block" ng-click="gotoregister()">Sign up</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

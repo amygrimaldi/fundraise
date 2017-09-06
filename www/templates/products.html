@@ -1,0 +1,19 @@
+<ion-view view-title="{{::products.messages.title}}" >
+  <ion-content>
+    <label class="item item-input">
+      <i class="icon ion-search placeholder-icon"></i>
+      <input type="search" placeholder="Search" ng-model="searchproduct">
+    </label>
+
+    <ion-list>
+      <ion-item
+        class="item-remove-animate item-avatar item-icon-right no-padding item-text-wrap"
+          ng-repeat="product in products.productdata.data.products | filter: searchproduct | orderBy: 'id'" type="item-text-wrap" >
+        <img ng-src="{{product.mainImage}}">
+        <h2>{{product.name}} - {{product.priceFormatted}} </h2>
+        <p>{{product.description}}</p>
+        <i class="icon ion-chevron-right icon-accessory" ng-click="gotoproduct(product.id)"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

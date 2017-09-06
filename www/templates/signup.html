@@ -1,0 +1,30 @@
+<ion-view view-title="Create Account">
+    <ion-content>
+        <div class="card">
+            <form ng-submit="createuser(username, password, email)">
+                <div class="item item-body">
+                    <img class="full-image" src="../img/login_background.png">
+                    <p>Create account</p>
+                    <div class="list">
+                        <label class="item item-input item-floating-label">
+                            <ion-label floating>Email:</ion-label> <input type="text" ng-model="email" placeholder="Email">
+                        </label>
+                        <label class="item item-input item-floating-label">
+                            <ion-label floating>Username:</ion-label> <input type="text" ng-model="username" placeholder="Username">
+                        </label>
+                        <label class="item item-input item-floating-label">
+                            <ion-label floating>Password:</ion-label> <input type="password" ng-model="password" placeholder="Password">
+                        </label>
+
+                        <div class="col text-right">
+                            <button ion-button class="button button-balanced button-block" type="submit">Create account</button>
+                        </div>
+                        <div class="col text-right">
+                            <button ion-button class="button button-dark button-block" type="button" ng-click="gotomain()">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

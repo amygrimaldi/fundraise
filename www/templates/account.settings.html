@@ -1,0 +1,28 @@
+<ion-view title="Settings" class="flyingcartcss">
+    <ion-content>
+        <!-- Settings -->
+        <div class="opaqueform">
+            <form ng-submit="savelang(account.thisuser.language)">
+                <div class="card list">
+                    <div class="item item-text-wrap">Select the country where you would like to shop</div>
+                    <div class="item item-text-wrap">
+
+                        <label class = "item item-input item-select item-light">
+                            <div class = "input-label">
+                                Country:
+                            </div>
+                            <select ng-model="account.thisuser.language">
+                                <option value="en">en-GB</option>
+                                <option value="sq">sq-AL</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div class="col text-right">
+                        <button ion-button class="button button-assertive button-block">Save Settings</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </ion-content>
+</ion-view>

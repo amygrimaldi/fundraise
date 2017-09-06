@@ -1,0 +1,42 @@
+<ion-view view-title="User info" class="flyingcartcss">
+    <ion-content>
+        <!-- Account Info -->
+        <ion-list>
+            <ion-item>
+                <ion-label>Name: {{account.thisuser.username}}</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Address: {{account.thisuser.country + ', ' + account.thisuser.city +', ' + account.thisuser.street}}</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Email: {{account.thisuser.email}}</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Phone: {{account.thisuser.phone}}</ion-label>
+                <ion-input type="text"></ion-input>
+            </ion-item>
+        </ion-list>
+
+        <div class="row">
+            <div class="col text-left">
+                <button ion-button class="button button-balanced button-block" ng-click="editaccount()">Account</button>
+            </div>
+            <div class="col text-right">
+                <button ion-button class="button button-balanced button-block" ng-click="showsettings()">Settings</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-left">
+                <button ion-button class="button button-dark button-block"ng-click="gotochangepass()">Change Password</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <button ion-button class="button button-assertive button-block" ng-click="log_out()">Logout</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

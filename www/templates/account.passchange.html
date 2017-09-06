@@ -1,0 +1,22 @@
+<ion-view title="Change Password" class="marketbkg">
+    <ion-content>
+        <!-- Settings -->
+        <form id="changepassform" ng-submit="changepass(account.thisuser.currpassword, account.thisuser.newpass, account.thisuser.newpassconfirm)">
+            <ion-item>
+                <ion-label floating>Enter current password:</ion-label>
+                <input type="password" ng-model="account.thisuser.currpassword"></input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>New password:</ion-label> <input type="password" ng-model="account.thisuser.newpass"></input>
+            </ion-item>
+            <ion-item>
+                <ion-label floating>Confirm new password:</ion-label> <input type="password" ng-model="account.thisuser.newpassconfirm"></input>
+            </ion-item>
+            <div class="row">
+                <div class="col text-right">
+                    <button ion-button class="button button-balanced button-block">Save</button>
+                </div>
+            </div>
+        </form>
+    </ion-content>
+</ion-view>
