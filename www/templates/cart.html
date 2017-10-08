@@ -1,34 +1,18 @@
-<ion-view view-title="{{::cart.messages.title}}">
-  <ion-content>
-    <!-- if the cart has no elements -->
-    <div ng-show="cart.cart.productCount === 0">
-      <div>Your Cart is empty</div>
-    </div>
-
-    <!-- if the cart has some products -->
-<div ng-hide="cart.cartdata.data.productCount === 0">
-  <div class="list">
-    <div class="item">
-      <div class="padding">
-        <h3>Total: {{cart.cartdata.data.totalPriceFormatted}} {{cart.cartdata.data.currency}}</h3>
-      </div>
-    </div>
-    <div class="item item-thumbnail-left item-avatar item-icon-right no-padding item-text-wrap" ng-repeat="product in cart.cartdata.data.items">
-      <img ng-src="{{product.variant.images[0]}}">
-      <h2>{{ product.totalItemPrice }}</h2>
-      <h4>$ {{ product.totalItemPriceFormatted }}</h4>
-      <div>
-        <a ng-click="additemquantity(product.id, product.variant.type, product.variant.size.id, 'add', 1)">
-          <i class="ion ion-plus"></i>
-        </a>
-        {{product.quantity}}
-        <i class="ion ion-minus"></i>
-      </div>
-    </div>
-    <div class="padding">
-      <button ng-click="checkout()" class="button button-positive icon-end">Check Out</button>
-    </div>
-  </div>
-</div>
-</ion-content>
+<ion-view view-title="{{::cart.messages.title}}" >
+    <ion-content>
+        <ion-list>
+            <ion-item
+                    class="item-remove-animate item-avatar item-icon-right no-padding item-text-wrap"
+                    ng-repeat="cartitem in cart.crt_list.data.items" type="item-text-wrap" >
+                <img ng-src="{{cartitem.variant.mainImage}}">
+                <div class="child_div_1">
+                    <h2>{{cartitem.variant.name}}</h2>
+                    <h2>{{cartitem.variant.priceFormatted}}</h2>
+                    <h2>{{cartitem.quantity}} pcs</h2>
+                    <p>{{cartitem.variant.type}} / {{cartitem.variant.size.value}}</p>
+                </div>
+                <i class="icon ion-chevron-right icon-accessory" ng-controller="ProductDetailCtrl" ng-click="gotoproduct(product.id)"></i>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

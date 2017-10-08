@@ -55,28 +55,18 @@ function Configurator($httpProvider, $stateProvider, $urlRouterProvider) {
         controller: 'ProductsCtrl as products'
       }
     }
-  })
-
-  /*.state('product_detail', {
-      url: '/products/detail',
+})
+  .state('product_detail', {
+      url: '/product_detail',
       parent: 'app',
+      params: {the_data: null},
       views: {
           'products-tab@app': {
               templateUrl: 'templates/product.detail.html',
-              controller: 'ProductsCtrl as products'
+              controller: 'ProductDetailCtrl as product_detail'
           }
       }
-  })*/
-      .state('product_detail', {
-          url: '/products/detail',
-          parent: 'app',
-          views: {
-              'products-tab@app': {
-                  templateUrl: 'templates/product.detail.html',
-                  controller: 'ProductsCtrl as products'
-              }
-          }
-      })
+  })
 
   .state('cart', {
     url: '/cart',

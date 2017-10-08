@@ -2,6 +2,7 @@ angular.module('ionic-ecommerce.controllers', [])
 .controller('TabCtrl', TabCtrl)
 .controller('HomeCtrl', HomeCtrl)
 .controller('ProductsCtrl', ProductsCtrl)
+.controller('ProductDetailCtrl', ProductDetailCtrl)
 .controller('CartCtrl', CartCtrl)
 .controller('AccountCtrl', AccountCtrl)
 .controller('LoginCtrl', LoginCtrl);
@@ -10,12 +11,14 @@ angular.module('ionic-ecommerce.controllers', [])
 TabCtrl.$inject = ['$scope', 'CartService', 'CONFIG'];
 function TabCtrl(   $scope,   CartService,   CONFIG) {
   var vm = this;
-  vm.count = CartService.getCount();
+  vm.count = 1; //CartService.getCount();
   vm.messages = CONFIG.tabs;
+/*
 
-  $scope.$watch(function(){ return CartService.getCount();}, function(current, original) {
-    vm.count = current;
-  });
+ $scope.$watch(function(){ return CartService.getCount();}, function(current, original) {
+ vm.count = current;
+ });
+* */
 }
 
 // Home Controller
@@ -43,7 +46,6 @@ ProductsCtrl.$inject = ['$scope', '$state', '$ionicLoading', '$ionicPopup', 'Aut
 function ProductsCtrl($scope, $state,   $ionicLoading,   $ionicPopup,   AuthService,   ProductService,   CONFIG) {
     var vm = this;
     vm.messages = CONFIG.products;
-    vm.currentproduct = {};
 
     //ketu kaloj tek cart (e view) te gjitha vlerat e marra nga sherbimi
     vm.thedata = ProductService.myDataPromise.then(function(result) {
@@ -51,18 +53,27 @@ function ProductsCtrl($scope, $state,   $ionicLoading,   $ionicPopup,   AuthServ
         console.log(result);
     });
 
+}
+
+//Products Controller
+ProductDetailCtrl.$inject = ['$scope', '$state', '$ionicLoading', '$ionicPopup', 'AuthService', 'ProductService', 'CONFIG'];
+function ProductDetailCtrl($scope, $state,   $ionicLoading,   $ionicPopup,   AuthService,   ProductService,   CONFIG) {
     //opens page of a single product. Gets data for this product
     $scope.gotoproduct = function (product_id) {
-        console.log("the product id "+product_id);
-        vm.thedata = ProductService.productdetail.then(function(result) {
-            vm.productdetail = result;
-            vm.currentproduct = {"endgame": "sandor and sansa"}
-            console.log(result);
-            $state.go("product_detail")
-        })/*.then(function(data){
-        })*/;
+        var vm = this;
+        console.log("the product id "+product_id); //ok
 
-        //$state.go('product_detail');
+        vm.thedatas = ProductService.productdetail(product_id).then(function(data) {
+            // $scope.userdata = data;
+            console.log("@product detail controller funct")
+            console.log(data);
+            console.log("prape id -- "+product_id);
+            vm.product_id = 10;
+            $state.go('product_detail', {the_data: vm.product_id})
+        }).catch(function(errorResponse) {
+            console.log('error', errorResponse);
+        });
+
     }
 
 }
@@ -74,14 +85,53 @@ function CartCtrl( $scope,   $state,   CartService,   CONFIG) {
   vm.messages = CONFIG.cart;
   vm.remove = remove;
 
+  /*
   $scope.$on('$ionicView.enter', function(e) {
     vm.products = CartService.products;
     vm.total = CartService.total;
+    console.log(vm.products);
     for (var key in vm.products) {
       var product = vm.products[key];
       product.image = CONFIG.image_root + product.master.images[0].mini_url;
     }
   });
+  */
+/*
+
+ vm.cart_list = ProductService.myDataPromise.then(function(result) {
+ vm.productdata = result;
+ console.log(result);
+ });
+ */
+
+
+
+    //appoint result returned from login
+    //$scope.log_in = function () {
+        vm.cart_list = CartService.cart_list().then(function(response){
+            console.log(response);
+            vm.crt_list = response;
+            /*
+            if(ok){
+                save_user_data(LocalStorage, response.data); //store data in local storage
+                //change view, passing parameters
+                $state.go('account_info', {
+                    username: response.data.name, email: response.data.email, country: response.data.country,
+                    city: response.data.city, street: response.data.street, phone: response.data.phone
+                });
+            }
+            else{ //nqs jo i loguar, nuk ka cart
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Unsuccessful login',
+                    template: 'Username and password did not match'
+                });
+                alertPopup.then(function(res) {
+                    // Custom functionality....
+                });
+            }
+            */
+        });
+    //}
 
   function remove(product) {
     CartService.remove(product);

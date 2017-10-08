@@ -1,18 +1,10 @@
-<ion-view view-title="{{::products.messages.title}}" >
+<ion-view view-title="{{::product_detail}}" >
     <ion-content>
-        <div class = "card">
-            <div class = "item item-avatar">
-                <img src = "my-image.png">
-            </div>
+        <label class="item item-input">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input type="search" placeholder="Search" ng-model="searchproduct">
+        </label>
 
-            <div class = "item item-body">
-                <img class = "full-image" src = "my-image.png">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eget
-                pharetra tortor. Proin quis eros imperdiet, facilisis nisi in, tincidunt orci.
-                Nam tristique elit massa, quis faucibus augue finibus ac.
-            </div>
-        </div>
-
-        <p>{{products.productdata.data}}</p>
+        <ion-list>
     </ion-content>
 </ion-view>

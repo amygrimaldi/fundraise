@@ -18,6 +18,10 @@ function httppostrequest($http, apiurl, apidata){
         timeout: 5000
     });
 }
+function createtoken(user_id, app_id, device_id, language){
+    var time = Date.now();
+    return 'user_id:'+user_id+';app_id:'+device_id+';device_id:'+device_id+';language:'+language+';timestamp:'+time+'';
+}
 
 // Auth Service
 AuthService.$inject = ['$q', '$http', 'LocalStorage', 'CONFIG'];
@@ -37,6 +41,7 @@ function AuthService($q, $http, LocalStorage, CONFIG) {
     LocalStorage.set(localStorage_token_key, token);
     useCredentials(token);
   }
+
 
   function useCredentials(token) {
     isAuthenticated = true;
@@ -154,10 +159,14 @@ function ProductService($http, $q, AuthService, CONFIG) {
     service.productdata = {};
     service.myDataPromise = httppostrequest($http, productlisturl, productlistdata);
 
-    var producturl = 'http://angelamustafa-001-site5.ctempurl.com/products';
-    var productdata = JSON.parse('{"id":156,"token":"user_id:513;app_id:2;device_id:56135127a430b2a4;language:en-GB;timestamp:0"}');
-    service.productdetaildata = {};
-    service.productdetail = httppostrequest($http, producturl, productdata);
+
+    service.productdetail = function(product_id){
+        console.log("@product detail service funct")
+        var producturl = 'http://angelamustafa-001-site5.ctempurl.com/products';
+        var productdata = JSON.parse('{"id":'+product_id+',"token":"user_id:513;app_id:2;device_id:56135127a430b2a4;language:en-GB;timestamp:0"}');
+        return httppostrequest($http, producturl, productdata);
+    }
+
 
 
     function all(cache) {
@@ -212,33 +221,34 @@ function ProductService($http, $q, AuthService, CONFIG) {
 }
 
 // Cart Service
-CartService.$inject = ['$http', '$q', 'ProductService'];
-function CartService($http, $q, ProductService) {
-  var service = this;
-  service.products = [];
-  service.cart_product_id = 0;
-  service.total = 0;
-  service.add = add;
-  service.remove = remove;
-  service.getCount = getCount;
+CartService.$inject = ['$http', '$q', 'ProductService', 'LocalStorage'];
+function CartService($http, $q, ProductService, LocalStorage) {
+    var service = this;
+    service.products = [];
+    service.cart_product_id = 0;
+    service.total = 0;
+    service.add_to_cart = add_to_cart;
 
-  function add(product) {
-    var newProduct = $.extend(true, {}, product);
-    newProduct.cart_product_id = ++service.cart_product_id;
-    service.products.push(newProduct);
-    service.total += parseFloat(newProduct.price);
-  }
+    function cart_list() {
+        var cartlisturl = 'http://angelamustafa-001-site5.ctempurl.com/cart';
+        var user_token = createtoken(LocalStorage.get("user_id"), 2, 'rtteotw', LocalStorage.get("language"));
+        console.log(user_token);
+        if(user_token !== undefined)
+        var cartlistdata = JSON.parse('{ "token": "user_id:576;app_id:rtteotw;device_id:rtteotw;language:undefined;timestamp:1504993707040" }');
+        return httppostrequest($http, cartlisturl, cartlistdata);
+    }
 
-  function remove(product) {
-    service.products = service.products.filter(function (el) { return el !== product; });
-    service.total -= parseFloat(product.price);
-  }
+    function add_to_cart(product) {
+        var newProduct = $.extend(true, {}, product);
+        newProduct.cart_product_id = ++service.cart_product_id;
+        service.products.push(newProduct);
+        service.total += parseFloat(newProduct.price);
+    }
 
-  function getCount() {
-    return service.products.length;
-  }
-
-  return service;
+    return {
+        cart_list: cart_list,
+        add_to_cart: add_to_cart
+    }
 }
 
 LocalStorage.$inject = ['$window'];
